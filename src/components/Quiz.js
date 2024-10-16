@@ -1,10 +1,10 @@
-// src/components/Quiz.js
 
-import React, { useState, useEffect, useCallback } from "react";
+// Updated Quiz.js
+import React, { useState, useEffect } from "react";
 import { quizzes } from "../data/quizzes";
 import Achievements from "./Achievements";
 
-function Quiz({ category, playerName, onReset }) {
+function Quiz({ category, playerName }) {
   const [questions, setQuestions] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [userAnswers, setUserAnswers] = useState([]);
@@ -31,8 +31,61 @@ function Quiz({ category, playerName, onReset }) {
     setTimeLeft(timeLimit);
   }, [currentQuestion, category.difficulty]);
 
-  // Memoized calculateScore function
-  const calculateScore = useCallback(() => {
+  useEffect(() => {
+    if (timeLeft === 0) {
+      handleNextQuestion();
+    }
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [timeLeft]);
+
+  const handleAnswer = (option) => {
+    setSelectedOption(option);
+    const updatedAnswers = [...userAnswers];
+    updatedAnswers[currentQuestion] = {
+      question: questions[currentQuestion]?.question || "No question available",
+      selectedAnswer: option,
+      correctAnswer: questions[currentQuestion]?.correctAnswer || "Not available",
+      timeLeft: timeLeft,
+      difficulty: questions[currentQuestion]?.difficulty || "Easy",
+    };
+    setUserAnswers(updatedAnswers);
+  };
+
+  const handleNextQuestion = () => {
+    const updatedAnswers = [...userAnswers];
+
+    if (!updatedAnswers[currentQuestion]) {
+      updatedAnswers[currentQuestion] = {
+        question: questions[currentQuestion]?.question || "No question available",
+        selectedAnswer: null,
+        correctAnswer: questions[currentQuestion]?.correctAnswer || "Not available",
+        difficulty: questions[currentQuestion]?.difficulty || "Easy",
+      };
+    }
+
+    setUserAnswers(updatedAnswers);
+
+    if (currentQuestion + 1 < questions.length) {
+      setSelectedOption(null);
+      setCurrentQuestion(currentQuestion + 1);
+    } else {
+      calculateScore();
+      setIsFinished(true);
+    }
+  };
+
+  const handlePrevQuestion = () => {
+    if (currentQuestion > 0) {
+      setSelectedOption(userAnswers[currentQuestion - 1]?.selectedAnswer || null);
+      setCurrentQuestion(currentQuestion - 1);
+    }
+  };
+
+  const calculateScore = () => {
     let totalScore = 0;
     userAnswers.forEach((answer) => {
       if (answer && answer.selectedAnswer === answer.correctAnswer) {
@@ -56,9 +109,14 @@ function Quiz({ category, playerName, onReset }) {
 
     // Update user's total points and achievements
     const userData = JSON.parse(localStorage.getItem("userData")) || {};
-    const user = userData[playerName] || { totalPoints: 0, achievements: [] };
+    const user = userData[playerName] || { totalPoints: 0, achievements: [], completedQuizzes: [] };
 
-    user.totalPoints += totalScore;
+    // Prevent adding points if the quiz has been completed
+    const quizIdentifier = `${category.category}_${category.difficulty}`;
+    if (!user.completedQuizzes.includes(quizIdentifier)) {
+      user.totalPoints += totalScore;
+      user.completedQuizzes.push(quizIdentifier);
+    }
 
     // Check for achievements
     const achievements = user.achievements || [];
@@ -73,64 +131,8 @@ function Quiz({ category, playerName, onReset }) {
     }
 
     user.achievements = achievements;
-
     userData[playerName] = user;
     localStorage.setItem("userData", JSON.stringify(userData));
-  }, [playerName, userAnswers, questions.length]);
-
-  // useCallback to memoize handleNextQuestion
-  const handleNextQuestion = useCallback(() => {
-    const updatedAnswers = [...userAnswers];
-
-    if (!updatedAnswers[currentQuestion]) {
-      updatedAnswers[currentQuestion] = {
-        question: questions[currentQuestion]?.question || "No question available",
-        selectedAnswer: null,
-        correctAnswer: questions[currentQuestion]?.correctAnswer || "Not available",
-        difficulty: questions[currentQuestion]?.difficulty || "Easy",
-      };
-    }
-
-    setUserAnswers(updatedAnswers);
-
-    if (currentQuestion + 1 < questions.length) {
-      setSelectedOption(null);
-      setCurrentQuestion(currentQuestion + 1);
-    } else {
-      calculateScore(); // Call calculateScore here
-      setIsFinished(true);
-    }
-  }, [currentQuestion, userAnswers, questions, calculateScore]);
-
-  useEffect(() => {
-    if (timeLeft === 0) {
-      handleNextQuestion();
-    }
-    const timer = setInterval(() => {
-      setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, [timeLeft, handleNextQuestion]);
-
-  const handleAnswer = (option) => {
-    setSelectedOption(option);
-    const updatedAnswers = [...userAnswers];
-    updatedAnswers[currentQuestion] = {
-      question: questions[currentQuestion]?.question || "No question available",
-      selectedAnswer: option,
-      correctAnswer: questions[currentQuestion]?.correctAnswer || "Not available",
-      timeLeft: timeLeft,
-      difficulty: questions[currentQuestion]?.difficulty || "Easy",
-    };
-    setUserAnswers(updatedAnswers);
-  };
-
-  const handlePrevQuestion = () => {
-    if (currentQuestion > 0) {
-      setSelectedOption(userAnswers[currentQuestion - 1]?.selectedAnswer || null);
-      setCurrentQuestion(currentQuestion - 1);
-    }
   };
 
   // Handle case when no questions are available
@@ -140,7 +142,7 @@ function Quiz({ category, playerName, onReset }) {
         <h2>
           No questions available for {category.category} at {category.difficulty} level.
         </h2>
-        <button onClick={onReset}>Go Back</button>
+        <button onClick={() => window.location.reload()}>Go Back</button>
       </div>
     );
   }
@@ -182,7 +184,7 @@ function Quiz({ category, playerName, onReset }) {
         {/* Display Achievements */}
         <Achievements playerName={playerName} />
 
-        <button onClick={onReset}>Restart</button>
+        <button onClick={() => window.location.reload()}>Restart</button>
       </div>
     );
   }
