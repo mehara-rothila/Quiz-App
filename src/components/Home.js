@@ -1,9 +1,7 @@
-// src/components/Home.js
-
 import React, { useState, useEffect } from "react";
 import Quiz from "./Quiz";
 
-function Home({ onLogout }) {
+function Home({ onThemeToggle, theme }) {
   const [selectedQuiz, setSelectedQuiz] = useState(null);
   const [playerName, setPlayerName] = useState("");
   const [nameError, setNameError] = useState("");
@@ -39,18 +37,12 @@ function Home({ onLogout }) {
 
   const handleQuizSelect = (category) => {
     setSelectedQuiz({ category });
-    // After selecting quiz, scroll to name input
     setTimeout(() => {
       const nameInput = document.getElementById("playerName");
       if (nameInput) {
         nameInput.focus();
       }
     }, 100);
-  };
-
-  const handleQuizReset = () => {
-    setSelectedQuiz(null);
-    setIsNameEntered(false);
   };
 
   const toggleLeaderboard = () => {
@@ -62,22 +54,12 @@ function Home({ onLogout }) {
     setLeaderboard([]);
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("user");
-    onLogout();
-  };
-
   return (
     <div className="quiz-container">
-      <button className="logout-button" onClick={handleLogout}>
-        Logout
-      </button>
-
       {selectedQuiz && isNameEntered ? (
         <Quiz
           category={{ category: selectedQuiz.category, difficulty: selectedDifficulty }}
           playerName={playerName}
-          onReset={handleQuizReset}  // Pass the reset handler to Quiz
         />
       ) : (
         <div className="home-content">
@@ -87,6 +69,13 @@ function Home({ onLogout }) {
               Test your knowledge by choosing a quiz below and see if you can reach the
               leaderboard!
             </p>
+          </div>
+
+          {/* Reduced Spacing Theme Button */}
+          <div className="theme-button-container-reduced">
+            <button className="theme-toggle-button-reduced" onClick={onThemeToggle}>
+              Switch to {theme === 'dark' ? 'Light' : 'Dark'} Mode
+            </button>
           </div>
 
           {/* Difficulty Selection with Buttons */}
