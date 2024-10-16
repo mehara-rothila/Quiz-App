@@ -1,6 +1,4 @@
-
-// Updated Quiz.js
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { quizzes } from "../data/quizzes";
 import Achievements from "./Achievements";
 
@@ -31,31 +29,7 @@ function Quiz({ category, playerName }) {
     setTimeLeft(timeLimit);
   }, [currentQuestion, category.difficulty]);
 
-  useEffect(() => {
-    if (timeLeft === 0) {
-      handleNextQuestion();
-    }
-    const timer = setInterval(() => {
-      setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, [timeLeft]);
-
-  const handleAnswer = (option) => {
-    setSelectedOption(option);
-    const updatedAnswers = [...userAnswers];
-    updatedAnswers[currentQuestion] = {
-      question: questions[currentQuestion]?.question || "No question available",
-      selectedAnswer: option,
-      correctAnswer: questions[currentQuestion]?.correctAnswer || "Not available",
-      timeLeft: timeLeft,
-      difficulty: questions[currentQuestion]?.difficulty || "Easy",
-    };
-    setUserAnswers(updatedAnswers);
-  };
-
-  const handleNextQuestion = () => {
+  const handleNextQuestion = useCallback(() => {
     const updatedAnswers = [...userAnswers];
 
     if (!updatedAnswers[currentQuestion]) {
@@ -76,6 +50,30 @@ function Quiz({ category, playerName }) {
       calculateScore();
       setIsFinished(true);
     }
+  }, [currentQuestion, questions, userAnswers]);
+
+  useEffect(() => {
+    if (timeLeft === 0) {
+      handleNextQuestion();
+    }
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [timeLeft, handleNextQuestion]);
+
+  const handleAnswer = (option) => {
+    setSelectedOption(option);
+    const updatedAnswers = [...userAnswers];
+    updatedAnswers[currentQuestion] = {
+      question: questions[currentQuestion]?.question || "No question available",
+      selectedAnswer: option,
+      correctAnswer: questions[currentQuestion]?.correctAnswer || "Not available",
+      timeLeft: timeLeft,
+      difficulty: questions[currentQuestion]?.difficulty || "Easy",
+    };
+    setUserAnswers(updatedAnswers);
   };
 
   const handlePrevQuestion = () => {
