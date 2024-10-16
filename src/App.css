@@ -1,0 +1,193 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Enhanced Dark Mode Login Form Styles */
+.login-container {
+  text-align: center;
+  margin-top: 100px;
+  padding: 40px;
+  background-color: var(--container-background-color); /* Use the dark container color */
+  border: none; /* No border for dark theme */
+  border-radius: 15px;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); /* Darker shadow for dark mode */
+  transition: box-shadow 0.3s ease;
+}
+
+.login-container:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7); /* Intense shadow for hover */
+}
+
+.login-container h2 {
+  margin-bottom: 20px;
+  font-size: 26px;
+  color: var(--text-color); /* Use light text for dark mode */
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+.input-group {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.login-container input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid var(--button-border-color); /* Border with theme color */
+  outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  background-color: var(--button-background-color); /* Dark background for input */
+  color: var(--text-color); /* Light text color for input */
+}
+
+.login-container input:focus {
+  border-color: var(--highlight-color); /* Highlight input border */
+  box-shadow: 0 0 8px rgba(27, 116, 228, 0.3);
+  background-color: var(--button-hover-background-color); /* Lighter background on focus */
+}
+
+.password-toggle {
+  position: absolute;
+  right: 15px; /* Increased right padding to give more space */
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: var(--text-color); /* Use light color for dark mode */
+  font-size: 14px; /* Adjust the font size if necessary */
+}
+
+.password-toggle:hover {
+  color: var(--highlight-color); /* Highlight color on hover */
+}
+
+.login-button {
+  width: 100%;
+  padding: 12px;
+  font-size: 18px;
+  background-color: var(--highlight-color); /* Use the highlight color for button */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.login-button:hover {
+  background-color: #1661c1;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(22, 97, 193, 0.3);
+}
+
+.login-button:disabled {
+  background-color: #999;
+  cursor: not-allowed;
+}
+
+.error {
+  color: red;
+  margin-bottom: 10px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Animation for hover effect on login box */
+.login-container:hover {
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.7); /* Darker hover shadow */
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .login-container {
+    padding: 20px;
+    width: 90%;
+  }
+
+  .login-button {
+    width: 100%;
+  }
+}
+
+.logout-button {
+  border-radius: 15px; /* Adjusted for a new shape (less rounded) */
+  cursor: pointer;
+  font-family: Montserrat, sans-serif; /* Font family */
+  font-size: 18px; /* Font size */
+  margin: 8px; /* Space around the button */
+  padding: 16px 24px; /* Padding inside the button */
+  transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s; /* Smooth transition */
+  width: 200px; /* Adjust width */
+  background-color: #ff4c4c; /* Red background color */
+  color: white; /* Text color */
+  text-align: center; /* Center text */
+  display: inline-block; /* Prevents stretching */
+  flex-grow: 0; /* Prevents stretching */
+  flex-shrink: 0; /* Prevents shrinking */
+  box-sizing: border-box; /* Padding included in the width */
+}
+
+.logout-button:hover {
+  background-color: #ff1f1f; /* Darker red on hover */
+  transform: translateY(-2px); /* Lift effect on hover */
+  box-shadow: 0 4px 12px rgba(255, 76, 76, 0.4); /* Subtle shadow */
+}
+
+.logout-button:focus {
+  outline: none;
+  background-color: #ff1f1f; /* Darker red when focused */
+  box-shadow: 0 0 10px rgba(255, 76, 76, 0.4); /* Focus shadow */
+}
+
+/* Responsive for smaller screens */
+@media (max-width: 600px) {
+  .logout-button {
+    font-size: 16px; /* Adjust font size for smaller screens */
+    padding: 12px 20px; /* Slightly reduce padding */
+    width: 100%; /* Full width on small screens */
+    max-width: none; /* No max width */
+  }
+}

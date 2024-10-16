@@ -1,0 +1,613 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Playfair+Display:wght@400;600&display=swap');
+
+/* Default (Dark Theme) */
+:root {
+  --background-color: #0D1B2A; /* Deep dark blue */
+  --container-background-color: #1B263B; /* Darker blue for containers */
+  --text-color: #E0E6ED; /* Light grayish-blue for text */
+  --secondary-text-color: #A9B8C9;
+  --button-background-color: #1E2A3A;
+  --button-text-color: #E0E6ED;
+  --button-border-color: #415A77;
+  --button-hover-background-color: #28394D;
+  --button-active-background-color: #1B74E4;
+  --button-active-text-color: #FFFFFF;
+  --button-active-border-color: #1B74E4;
+  --progress-bar-background: #415A77;
+  --progress-bar-fill: #1B74E4;
+  --highlight-color: #1B74E4;
+  --selected-option-background: #415A77;
+  --selected-option-text: #FFFFFF;
+  --quiz-summary-background: #1E2A3A;
+  --leaderboard-table-background: #16213E;
+  --leaderboard-row-hover: #27496D;
+  --badge-background: #ffc107;
+  --badge-text-color: #000;
+}
+
+/* Light Theme */
+:root.light-theme {
+  --background-color: #ffffff;
+  --container-background-color: #f0f0f0;
+  --text-color: #000000;
+  --secondary-text-color: #555555;
+  --button-background-color: #e0e0e0;
+  --button-text-color: #000000;
+  --button-border-color: #999999;
+  --button-hover-background-color: #d5d5d5;
+  --button-active-background-color: #1B74E4;
+  --button-active-text-color: #FFFFFF;
+  --button-active-border-color: #1B74E4;
+  --progress-bar-background: #cccccc;
+  --progress-bar-fill: #1B74E4;
+  --highlight-color: #1B74E4;
+  --selected-option-background: #cccccc;
+  --selected-option-text: #000000;
+  --quiz-summary-background: #e0e0e0;
+  --leaderboard-table-background: #dddddd;
+  --leaderboard-row-hover: #bbbbbb;
+  --badge-background: #ffd54f;
+  --badge-text-color: #000000;
+}
+
+/* Global Styles */
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  margin: 0;
+  padding: 0;
+}
+
+/* Main Quiz Container */
+.quiz-container {
+  background-color: var(--container-background-color);
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.7);
+  width: 75%;
+  max-width: 900px;
+  min-height: 85vh;
+  text-align: center;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  overflow: auto;
+}
+
+/* Name Input Container */
+.name-input-container {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.name-input-container label {
+  display: block;
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--text-color);
+  margin-bottom: 10px;
+}
+
+.name-input-container input[type="text"] {
+  width: 80%;
+  max-width: 400px;
+  padding: 14px;
+  margin: 0 auto 10px auto;
+  border: 1px solid var(--button-border-color);
+  border-radius: 30px;
+  font-size: 18px;
+  background-color: var(--button-background-color);
+  color: var(--text-color);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+  outline: none;
+  transition: border-color 0.3s, background-color 0.3s;
+}
+
+.name-input-container input[type="text"]:focus {
+  border-color: var(--highlight-color);
+  background-color: var(--button-hover-background-color);
+}
+
+.name-error {
+  color: red;
+  font-size: 16px;
+  margin-top: 5px;
+}
+
+.start-quiz-button {
+  background-color: var(--highlight-color);
+  color: #FFFFFF;
+  border: none;
+  padding: 12px 24px;
+  margin-top: 15px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.start-quiz-button:hover {
+  background-color: #1661C1;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(27, 116, 228, 0.4);
+}
+
+.start-quiz-button:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* Input Field Styling (General) */
+input[type="text"] {
+  width: 75%;
+  padding: 14px;
+  margin-bottom: 20px;
+  border: 1px solid var(--button-border-color);
+  border-radius: 30px;
+  font-size: 18px;
+  background-color: var(--button-background-color);
+  color: var(--text-color);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+  outline: none;
+  transition: border-color 0.3s, background-color 0.3s;
+}
+
+input[type="text"]:focus {
+  border-color: #778DA9;
+  background-color: var(--button-hover-background-color);
+}
+
+/* Difficulty Selection Styles */
+.difficulty-selection {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.difficulty-selection p {
+  font-size: 18px;
+  color: var(--text-color);
+  margin-bottom: 10px;
+}
+
+.difficulty-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.difficulty-button {
+  background-color: var(--button-background-color);
+  color: var(--button-text-color);
+  border: 1px solid var(--button-border-color);
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+}
+
+.difficulty-button:hover {
+  background-color: var(--button-hover-background-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(65, 90, 119, 0.4);
+}
+
+.difficulty-button.active {
+  background-color: var(--button-active-background-color);
+  border-color: var(--button-active-border-color);
+  color: var(--button-active-text-color);
+  box-shadow: 0 4px 8px rgba(27, 116, 228, 0.6);
+  transform: translateY(-2px);
+}
+
+.difficulty-button:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* Quiz Buttons */
+button {
+  border: none;
+  padding: 16px 24px;
+  margin: 8px;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 18px;
+  width: 70%;
+  max-width: 350px;
+  transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Adjust Button Sizes to Be Consistent */
+button {
+  flex: 1 1 calc(50% - 20px); /* Two buttons per row with gap */
+  max-width: 300px; /* Maximum width for each button */
+}
+
+/* Option Buttons */
+.option-button {
+  width: 100%;
+  margin: 8px 0;
+  background-color: var(--button-background-color);
+  color: var(--button-text-color);
+}
+
+.option-button:hover {
+  background-color: var(--button-hover-background-color);
+  transform: translateY(-2px);
+}
+
+/* Highlight for Selected Option */
+.selected-option {
+  background-color: var(--selected-option-background);
+  color: var(--selected-option-text);
+  transform: scale(1.05);
+  box-shadow: 0 0 12px rgba(65, 90, 119, 0.5);
+  font-weight: bold;
+}
+
+/* JavaScript Quiz Button */
+.js-quiz-button {
+  background-color: #f7df1e;
+  color: #000;
+}
+
+.js-quiz-button:hover {
+  background-color: #e5c700;
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(247, 223, 30, 0.4);
+}
+
+/* React Quiz Button */
+.react-quiz-button {
+  background-color: #61dafb;
+  color: #000;
+}
+
+.react-quiz-button:hover {
+  background-color: #21a1f1;
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(97, 218, 251, 0.4);
+}
+
+/* Python Quiz Button */
+.python-quiz-button {
+  background-color: #4B8BBE;
+  color: #fff;
+}
+
+.python-quiz-button:hover {
+  background-color: #306998;
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(75, 139, 190, 0.4);
+}
+
+/* SQL Quiz Button */
+.sql-quiz-button {
+  background-color: #F29111;
+  color: #fff;
+}
+
+.sql-quiz-button:hover {
+  background-color: #C87507;
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(242, 145, 17, 0.4);
+}
+
+/* C Quiz Button */
+.c-quiz-button {
+  background-color: #A8B9CC;
+  color: #000;
+}
+
+.c-quiz-button:hover {
+  background-color: #8CA0B3;
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(168, 185, 204, 0.4);
+}
+
+/* Java Quiz Button */
+.java-quiz-button {
+  background-color: #b07219;
+  color: #fff;
+}
+
+.java-quiz-button:hover {
+  background-color: #904e0f;
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(176, 114, 25, 0.4);
+}
+
+/* Leaderboard Styles */
+.leaderboard {
+  margin-top: 10px; /* Reduce space above leaderboard */
+  background-color: var(--container-background-color);
+  padding: 20px; /* Adjust padding inside the leaderboard */
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); /* Subtle shadow */
+  text-align: center;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Header Text Styling */
+.leaderboard h2 {
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--text-color);
+  margin-bottom: 10px; /* Reduce space between heading and table */
+  letter-spacing: 1.2px; /* Slightly spaced for readability */
+}
+
+/* Leaderboard Table Styling */
+.leaderboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px; /* Adjust spacing above table */
+  background-color: var(--leaderboard-table-background);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.leaderboard-table th,
+.leaderboard-table td {
+  padding: 10px; /* Adjust padding inside cells */
+  text-align: center;
+  color: var(--text-color);
+  border-bottom: 1px solid var(--container-background-color);
+  font-size: 18px;
+}
+
+.leaderboard-table th {
+  background-color: var(--highlight-color); /* Blue header */
+  font-weight: 600;
+}
+
+.leaderboard-table tr:nth-child(even) {
+  background-color: #1E2958; /* Alternate row color */
+}
+
+.leaderboard-table tr:hover {
+  background-color: var(--leaderboard-row-hover); /* Subtle hover effect */
+  transition: background-color 0.3s;
+}
+
+/* Leaderboard Button Styling */
+.leaderboard button {
+  background-color: var(--button-active-background-color);
+  color: var(--button-active-text-color);
+  border: none;
+  padding: 10px 16px; /* Adjust padding for buttons */
+  margin-top: 10px; /* Reduce space above Clear Leaderboard button */
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.leaderboard button:hover {
+  background-color: #1661C1;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(27, 116, 228, 0.4);
+}
+
+.leaderboard button:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* Player Name Styling */
+.player-name h2 {
+  text-align: center;
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: var(--text-color);
+  letter-spacing: 1.5px;
+}
+
+/* Progress Bar */
+.progress-bar {
+  background-color: var(--progress-bar-background);
+  border-radius: 5px;
+  overflow: hidden;
+  height: 10px;
+  margin-bottom: 20px;
+}
+
+.progress-bar-fill {
+  background-color: var(--progress-bar-fill);
+  height: 100%;
+  transition: width 0.3s;
+}
+
+/* Navigation Buttons */
+.navigation-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.navigation-buttons button {
+  width: 45%;
+  background-color: var(--button-background-color);
+  color: var(--button-text-color);
+}
+
+.navigation-buttons button:hover {
+  background-color: var(--button-hover-background-color);
+}
+
+/* Quiz Finish Section */
+.quiz-finish {
+  text-align: center;
+  color: var(--text-color);
+}
+
+/* Quiz Summary */
+.quiz-summary {
+  margin-top: 20px;
+  text-align: left;
+}
+
+.quiz-summary h3 {
+  font-size: 26px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  font-family: 'Playfair Display', serif;
+  color: var(--text-color);
+}
+
+.quiz-summary ul {
+  list-style: none;
+  padding: 0;
+}
+
+.quiz-summary-item {
+  background-color: var(--quiz-summary-background);
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.quiz-summary-item p {
+  margin: 8px 0;
+  font-size: 18px;
+  color: var(--text-color);
+}
+
+/* Correct and Incorrect Answers */
+.correct {
+  color: green;
+}
+
+.incorrect {
+  color: red;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .quiz-container {
+    width: 90%;
+    padding: 20px;
+  }
+
+  input[type="text"],
+  .name-input-container input[type="text"] {
+    width: 85%;
+  }
+
+  button {
+    width: 85%;
+  }
+
+  .difficulty-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .difficulty-button {
+    width: 80%;
+    margin-bottom: 10px;
+  }
+
+  .button-grid {
+    flex-direction: column; /* Stack buttons vertically on smaller screens */
+    gap: 15px;
+  }
+
+  button {
+    flex: 1 1 100%; /* Full width for each button */
+  }
+}
+
+/* Welcome Message Styling */
+.welcome-message {
+  text-align: center;
+  margin-bottom: 20px;
+  color: var(--text-color);
+}
+
+.welcome-message h1 {
+  font-size: 36px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  letter-spacing: 1.2px;
+}
+
+.welcome-message p {
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: var(--secondary-text-color);
+}
+
+/* Button Grid Layout */
+.button-grid {
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping if needed */
+  justify-content: center; /* Center the buttons horizontally */
+  gap: 20px; /* Spacing between buttons */
+  max-width: 800px;
+  margin: 0 auto; /* Center the grid on the page */
+}
+
+/* Achievements Styles */
+.achievements {
+  margin-top: 20px;
+  text-align: center;
+  color: var(--text-color);
+}
+
+.achievements h3 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.achievements p {
+  font-size: 18px;
+}
+
+.badges-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.badges-list li {
+  display: inline-block;
+  background-color: var(--badge-background);
+  color: var(--badge-text-color);
+  padding: 8px 12px;
+  margin: 5px;
+  border-radius: 20px;
+  font-weight: bold;
+}
+
+/* Theme Toggle Button */
+.theme-toggle-button {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  background-color: var(--button-background-color);
+  color: var(--button-text-color);
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.theme-toggle-button:hover {
+  background-color: var(--progress-bar-fill);
+  color: #FFFFFF;
+  transform: translateY(-2px);
+}
+
+.theme-toggle-button:active {
+  transform: translateY(0);
+}
