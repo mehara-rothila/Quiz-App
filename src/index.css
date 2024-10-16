@@ -550,11 +550,10 @@ button {
 .button-grid {
   display: flex;
   flex-wrap: wrap; /* Allow wrapping if needed */
-  justify-content: flex-start; /* Align buttons to the left by default */
+  justify-content: center; /* Center the buttons horizontally */
   gap: 20px; /* Spacing between buttons */
   max-width: 800px;
   margin: 0 auto; /* Center the grid on the page */
-  padding-left: 10%; /* Shift buttons to the right */
 }
 
 /* Achievements Styles */
@@ -586,92 +585,32 @@ button {
   margin: 5px;
   border-radius: 20px;
   font-weight: bold;
-}/* Enhanced Theme Button Container Styles */
+}
+/* Theme button container */
 .theme-button-container {
   display: flex;
   justify-content: flex-end; /* Align to the right side */
-  padding: 15px; /* Reduce the padding for a less bulky appearance */
+  padding: 20px; /* Add some spacing from the edges */
 }
-
 .theme-button-container-reduced {
   display: flex;
   justify-content: center;
-  margin-bottom: 8px; /* Slightly reduce margin for a more compact appearance */
+  margin-bottom: 10px; /* Reduced margin to integrate well with other components */
 }
 
-/* Enhanced Theme Toggle Button Styles */
 .theme-toggle-button-reduced {
-  padding: 12px 20px; /* Increased padding for a more inviting click area */
-  font-size: 16px; /* Slightly larger font size for better readability */
-  font-weight: 600; /* Make the text bold for emphasis */
-  letter-spacing: 0.5px; /* Add some spacing between letters */
-  background-color: var(--button-color-dark); /* Use dark color by default */
-  color: #ffffff; /* White text for contrast */
-  border: 2px solid transparent; /* Start with no border */
-  border-radius: 25px; /* Increase border radius for a pill-shaped button */
+  padding: 8px 16px; /* Adjusted padding */
+  font-size: 14px; /* Reduced font size */
+  background-color: var(--highlight-color);
+  color: white;
+  border: none;
+  border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+  transition: background-color 0.3s, transform 0.3s;
 }
 
-/* CSS Variables for Theme Colors */
-:root {
-  --button-color-dark: #6a0dad; /* Dark mode button color (purple) */
-  --button-color-light: #ffa500; /* Light mode button color (orange) */
-}
-
-/* Change button color depending on the mode */
-.light-theme .theme-toggle-button-reduced {
-  background-color: var(--button-color-light);
-  color: #000000; /* Black text for better contrast in light mode */
-}
-
-/* Button hover effect for a more interactive feel */
 .theme-toggle-button-reduced:hover {
-  background-color: #8b00ff; /* Darken color on hover (dark mode) */
-  transform: translateY(-4px); /* Slightly lift the button on hover */
-  box-shadow: 0 8px 20px rgba(139, 0, 255, 0.4); /* Make shadow more intense on hover */
-  border-color: #ffffff; /* White border to provide contrast */
-}
-
-/* Light theme hover effect */
-.light-theme .theme-toggle-button-reduced:hover {
-  background-color: #ff8c00; /* Darken orange on hover (light mode) */
-  box-shadow: 0 8px 20px rgba(255, 140, 0, 0.4);
-}
-
-/* Button active effect for clicking interaction */
-.theme-toggle-button-reduced:active {
-  transform: translateY(2px); /* Slightly depress the button on click */
-  box-shadow: 0 4px 12px rgba(139, 0, 255, 0.3);
-}
-
-/* Light theme active effect */
-.light-theme .theme-toggle-button-reduced:active {
-  background-color: #ff7f50; /* Slightly different shade when clicked (light mode) */
-  box-shadow: 0 4px 12px rgba(255, 127, 80, 0.3);
-}
-
-/* Focus outline for accessibility */
-.theme-toggle-button-reduced:focus {
-  outline: none;
-  border-color: #8b00ff; /* Blue border to indicate focus in dark mode */
-  box-shadow: 0 0 8px rgba(139, 0, 255, 0.5);
-}
-
-/* Light theme focus outline */
-.light-theme .theme-toggle-button-reduced:focus {
-  border-color: #ff8c00; /* Orange border for light mode focus */
-  box-shadow: 0 0 8px rgba(255, 140, 0, 0.5);
-}
-
-/* Responsive adjustments */
-@media (max-width: 600px) {
-  .theme-toggle-button-reduced {
-    padding: 10px 16px; /* Reduce padding for smaller screens */
-    font-size: 14px; /* Adjust font size for readability on smaller devices */
-  }
-
-  .theme-button-container-reduced {
-    justify-content: center; /* Center the button on smaller screens for better alignment */
-  }
+  background-color: #1661c1;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(22, 97, 193, 0.3);
 }
