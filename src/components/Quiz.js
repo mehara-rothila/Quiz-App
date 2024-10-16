@@ -29,61 +29,7 @@ function Quiz({ category, playerName }) {
     setTimeLeft(timeLimit);
   }, [currentQuestion, category.difficulty]);
 
-  const handleNextQuestion = useCallback(() => {
-    const updatedAnswers = [...userAnswers];
-
-    if (!updatedAnswers[currentQuestion]) {
-      updatedAnswers[currentQuestion] = {
-        question: questions[currentQuestion]?.question || "No question available",
-        selectedAnswer: null,
-        correctAnswer: questions[currentQuestion]?.correctAnswer || "Not available",
-        difficulty: questions[currentQuestion]?.difficulty || "Easy",
-      };
-    }
-
-    setUserAnswers(updatedAnswers);
-
-    if (currentQuestion + 1 < questions.length) {
-      setSelectedOption(null);
-      setCurrentQuestion(currentQuestion + 1);
-    } else {
-      calculateScore();
-      setIsFinished(true);
-    }
-  }, [currentQuestion, questions, userAnswers]);
-
-  useEffect(() => {
-    if (timeLeft === 0) {
-      handleNextQuestion();
-    }
-    const timer = setInterval(() => {
-      setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, [timeLeft, handleNextQuestion]);
-
-  const handleAnswer = (option) => {
-    setSelectedOption(option);
-    const updatedAnswers = [...userAnswers];
-    updatedAnswers[currentQuestion] = {
-      question: questions[currentQuestion]?.question || "No question available",
-      selectedAnswer: option,
-      correctAnswer: questions[currentQuestion]?.correctAnswer || "Not available",
-      timeLeft: timeLeft,
-      difficulty: questions[currentQuestion]?.difficulty || "Easy",
-    };
-    setUserAnswers(updatedAnswers);
-  };
-
-  const handlePrevQuestion = () => {
-    if (currentQuestion > 0) {
-      setSelectedOption(userAnswers[currentQuestion - 1]?.selectedAnswer || null);
-      setCurrentQuestion(currentQuestion - 1);
-    }
-  };
-
-  const calculateScore = () => {
+  const calculateScore = useCallback(() => {
     let totalScore = 0;
     userAnswers.forEach((answer) => {
       if (answer && answer.selectedAnswer === answer.correctAnswer) {
@@ -131,6 +77,60 @@ function Quiz({ category, playerName }) {
     user.achievements = achievements;
     userData[playerName] = user;
     localStorage.setItem("userData", JSON.stringify(userData));
+  }, [userAnswers, questions.length, playerName, category]);
+
+  const handleNextQuestion = useCallback(() => {
+    const updatedAnswers = [...userAnswers];
+
+    if (!updatedAnswers[currentQuestion]) {
+      updatedAnswers[currentQuestion] = {
+        question: questions[currentQuestion]?.question || "No question available",
+        selectedAnswer: null,
+        correctAnswer: questions[currentQuestion]?.correctAnswer || "Not available",
+        difficulty: questions[currentQuestion]?.difficulty || "Easy",
+      };
+    }
+
+    setUserAnswers(updatedAnswers);
+
+    if (currentQuestion + 1 < questions.length) {
+      setSelectedOption(null);
+      setCurrentQuestion(currentQuestion + 1);
+    } else {
+      calculateScore();
+      setIsFinished(true);
+    }
+  }, [currentQuestion, questions, userAnswers, calculateScore]);
+
+  useEffect(() => {
+    if (timeLeft === 0) {
+      handleNextQuestion();
+    }
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [timeLeft, handleNextQuestion]);
+
+  const handleAnswer = (option) => {
+    setSelectedOption(option);
+    const updatedAnswers = [...userAnswers];
+    updatedAnswers[currentQuestion] = {
+      question: questions[currentQuestion]?.question || "No question available",
+      selectedAnswer: option,
+      correctAnswer: questions[currentQuestion]?.correctAnswer || "Not available",
+      timeLeft: timeLeft,
+      difficulty: questions[currentQuestion]?.difficulty || "Easy",
+    };
+    setUserAnswers(updatedAnswers);
+  };
+
+  const handlePrevQuestion = () => {
+    if (currentQuestion > 0) {
+      setSelectedOption(userAnswers[currentQuestion - 1]?.selectedAnswer || null);
+      setCurrentQuestion(currentQuestion - 1);
+    }
   };
 
   // Handle case when no questions are available
