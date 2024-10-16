@@ -10,6 +10,7 @@ function Quiz({ category, playerName }) {
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(10);
   const [selectedOption, setSelectedOption] = useState(null);
+  const [isTimeOut, setIsTimeOut] = useState(false); // New state to track timeout
 
   useEffect(() => {
     const allQuestions = quizzes[category.category];
@@ -27,6 +28,7 @@ function Quiz({ category, playerName }) {
         ? 10
         : 5;
     setTimeLeft(timeLimit);
+    setIsTimeOut(false); // Reset timeout state when question changes
   }, [currentQuestion, category.difficulty]);
 
   const calculateScore = useCallback(() => {
@@ -103,15 +105,17 @@ function Quiz({ category, playerName }) {
   }, [currentQuestion, questions, userAnswers, calculateScore]);
 
   useEffect(() => {
-    if (timeLeft === 0) {
+    if (timeLeft === 0 && !isTimeOut) {
       handleNextQuestion();
+      setIsTimeOut(true); // Set timeout to true to prevent multiple calls
     }
+
     const timer = setInterval(() => {
       setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [timeLeft, handleNextQuestion]);
+  }, [timeLeft, handleNextQuestion, isTimeOut]);
 
   const handleAnswer = (option) => {
     setSelectedOption(option);
