@@ -550,10 +550,11 @@ button {
 .button-grid {
   display: flex;
   flex-wrap: wrap; /* Allow wrapping if needed */
-  justify-content: center; /* Center the buttons horizontally */
+  justify-content: flex-start; /* Align buttons to the left by default */
   gap: 20px; /* Spacing between buttons */
   max-width: 800px;
   margin: 0 auto; /* Center the grid on the page */
+  padding-left: 10%; /* Shift buttons to the right */
 }
 
 /* Achievements Styles */
