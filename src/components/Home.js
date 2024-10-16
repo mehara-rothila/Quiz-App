@@ -1,3 +1,4 @@
+// Updated Home.js
 import React, { useState, useEffect } from "react";
 import Quiz from "./Quiz";
 
@@ -14,6 +15,13 @@ function Home({ onThemeToggle, theme }) {
     const storedLeaderboard = JSON.parse(localStorage.getItem("leaderboard")) || [];
     setLeaderboard(storedLeaderboard);
   }, []);
+
+  useEffect(() => {
+    if (showLeaderboard) {
+      const storedLeaderboard = JSON.parse(localStorage.getItem("leaderboard")) || [];
+      setLeaderboard(storedLeaderboard);
+    }
+  }, [showLeaderboard]);
 
   const handleNameChange = (e) => {
     const name = e.target.value;
@@ -105,24 +113,12 @@ function Home({ onThemeToggle, theme }) {
 
           {/* Quiz Selection Buttons */}
           <div className="button-grid">
-            <button className="js-quiz-button" onClick={() => handleQuizSelect("JavaScript")}>
-              JavaScript Quiz
-            </button>
-            <button className="react-quiz-button" onClick={() => handleQuizSelect("React")}>
-              React Quiz
-            </button>
-            <button className="python-quiz-button" onClick={() => handleQuizSelect("Python")}>
-              Python Quiz
-            </button>
-            <button className="sql-quiz-button" onClick={() => handleQuizSelect("SQL")}>
-              SQL Quiz
-            </button>
-            <button className="c-quiz-button" onClick={() => handleQuizSelect("C")}>
-              C Quiz
-            </button>
-            <button className="java-quiz-button" onClick={() => handleQuizSelect("Java")}>
-              Java Quiz
-            </button>
+            <button className="js-quiz-button" onClick={() => handleQuizSelect("JavaScript")}>JavaScript Quiz</button>
+            <button className="react-quiz-button" onClick={() => handleQuizSelect("React")}>React Quiz</button>
+            <button className="python-quiz-button" onClick={() => handleQuizSelect("Python")}>Python Quiz</button>
+            <button className="sql-quiz-button" onClick={() => handleQuizSelect("SQL")}>SQL Quiz</button>
+            <button className="c-quiz-button" onClick={() => handleQuizSelect("C")}>C Quiz</button>
+            <button className="java-quiz-button" onClick={() => handleQuizSelect("Java")}>Java Quiz</button>
             <button className="leaderboard-button" onClick={toggleLeaderboard}>
               {showLeaderboard ? "Hide Leaderboard" : "View Leaderboard"}
             </button>
@@ -140,9 +136,7 @@ function Home({ onThemeToggle, theme }) {
                 onChange={handleNameChange}
               />
               {nameError && <p className="name-error">{nameError}</p>}
-              <button className="start-quiz-button" onClick={startQuiz}>
-                Start Quiz
-              </button>
+              <button className="start-quiz-button" onClick={startQuiz}>Start Quiz</button>
             </div>
           )}
 
