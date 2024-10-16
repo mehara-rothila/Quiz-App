@@ -545,17 +545,12 @@ button {
   margin-bottom: 20px;
   color: var(--secondary-text-color);
 }
-
-/* Button Grid Layout */
 .button-grid {
-  display: flex;
-  flex-wrap: wrap; /* Allow wrapping if needed */
-  justify-content: center; /* Center the buttons horizontally */
-  gap: 20px; /* Spacing between buttons */
-  max-width: 800px;
-  margin: 0 auto; /* Center the grid on the page */
+  flex-direction: column; /* Stack buttons vertically on smaller screens */
+  gap: 15px;
+  align-items: flex-start; /* Align buttons to the left */
+  padding-left: 20px; /* Add padding to shift the buttons to the right */
 }
-
 /* Achievements Styles */
 .achievements {
   margin-top: 20px;
