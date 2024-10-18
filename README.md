@@ -33,3 +33,27 @@ You can view and use the platform here: [Coding Quiz Platform](https://mrr-quiz.
 │   ├── index.js                   # Entry point for React
 │   ├── App.css                    # Application-wide CSS
 │   ├── index.css                  # Additional styling including dark/light theme
+
+
+Installation
+Clone the repository:
+
+bash
+Copy code
+git clone https://github.com/your-repo/quiz-platform.git
+Navigate to the project directory:
+
+bash
+Copy code
+cd quiz-platform
+Install dependencies:
+
+bash
+Copy code
+npm install
+Start the development server:
+
+bash
+Copy code
+npm start
+Open the application in your browser at http://localhost:3000
