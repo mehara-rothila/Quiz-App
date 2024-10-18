@@ -2,6 +2,9 @@
 
 This project is a web-based quiz platform designed to help users test their knowledge in various coding topics such as JavaScript, React, Python, SQL, C, and Java. The application supports multiple difficulty levels, tracks achievements, and includes a leaderboard feature to encourage competition.
 
+## Hosted Link
+You can view and use the platform here: [Coding Quiz Platform](https://mrr-quiz.netlify.app/)
+
 ## Features
 
 - **User Authentication**: Login functionality that verifies credentials before allowing access to quizzes.
